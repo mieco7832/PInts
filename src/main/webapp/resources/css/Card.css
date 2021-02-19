@@ -1,0 +1,33 @@
+
+div.card {
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    border-radius: 5px;
+    padding-bottom: 3px;
+    margin: 5px;
+    display: inline-table;
+    width:-webkit-fill-available;
+    font-family: sans-serif;
+}
+
+.card:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+div.card img.picture{
+    width: 100%;
+    transition: 0.3s;
+    border-radius: 5px 5px 0px 0px;
+}
+
+div.card p, h1, h2, h3, h4, h5{
+    width: 98%;
+    padding-left: 5px;
+    text-align: left;
+}
+
+div.card table{
+    width: 100%;
+    text-align: center;
+}
+

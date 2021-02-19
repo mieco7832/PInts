@@ -1,0 +1,40 @@
+table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow-x: auto;
+    max-height: inherit;
+    background: whitesmoke;
+    color: #000;
+    font-weight: normal;
+    text-shadow: none;
+}
+thead{
+    background: whitesmoke;
+    color: #000;
+    font-weight: normal;
+    text-shadow: none;
+}
+tr {
+    height: max-content;
+}
+
+th {
+    text-align: center;
+}
+
+th, td {
+    padding: 8px;
+}
+
+th, td{
+    border: 1px solid #ddd;
+}
+
+table.h-div th, td{
+    border: none;
+    border-bottom: 1px solid #ddd;
+}
+
+.striped tr:nth-child(even) {background-color: #f2f2f2;}
+
+.hoverable tr:hover {background-color:#f5f5f5;}

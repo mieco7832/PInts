@@ -1,0 +1,90 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Pints</title>
+    </h:head>
+    <h:body>
+        <ui:include src="componentes/header.xhtml" />
+        <!-- Page content -->
+        <div class="content" id="content">
+            <div class="container">
+                <!-- Nombre de la Instancia -->
+                <div class="subtitle">
+                    <h2>Caja</h2>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Card Start -->
+                        <div class="card">
+                            <!-- Row Start -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Facturas en Espera</h2>
+                                    <p:dataTable id="tablaEsperaFactura" value="#{caja.listaRespuestas}" var="res" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="250" emptyMessage="¡No hay solicitudes pendientes!" >
+                                        <p:column headerText="Solicitud" >
+                                            <p:outputLabel value="#{res.correlativo}" />
+                                        </p:column>
+                                        <p:column headerText="Aprobado por" >
+                                            <p:outputLabel value="#{res.empleado}" />
+                                        </p:column>
+                                        <p:column headerText="Fecha" >
+                                            <h:outputText value="#{res.fechaSoli}">
+                                                <f:convertDateTime pattern="yyyy MMMM dd hh:mm:ss aaa" timeZone="GMT-6" locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column headerText="Detalles">
+                                            <h:form>
+                                                <p:commandLink onclick="PF('dgRespuestaSolicitud').show();" update="detallesRespuesta" 
+                                                               actionListener="#{caja.obtenerSolictud(res)}" styleClass="float" >
+                                                    <img src="https://image.flaticon.com/icons/svg/1933/1933005.svg" alt="Agregar Una Respuesta" />
+                                                </p:commandLink>
+                                            </h:form>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                            <!-- Row End -->        
+                        </div>
+                        <!-- Card End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Dialog Detalle -->
+        <p:dialog id="dgDetRes" header="Detalles del Producto" widgetVar="dgRespuestaSolicitud" modal="true" responsive="true" width="576" resizable="false" showEffect="fade" hideEffect="fade" draggable="false">
+            <p:ajax event="close" update="dgDetRes" listener="#{caja.limpiarTotal()}" />
+            <h:form id="detallesRespuesta">
+                <p:dataTable value="#{caja.listaSolicitud}" var="pro" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="250" emptyMessage="¡No hay solicitudes pendientes!" >
+                    <p:column headerText="Producto">
+                        <h:outputText value="#{pro.codigo} #{pro.base} #{pro.presentacion} #{pro.marca}" />
+                    </p:column>
+                    <p:column headerText="Cantidad">
+                        <h:outputText value="#{pro.cantidadSoli}" />
+                    </p:column>
+                    <p:column headerText="Precio Unitario">
+                        <h:outputText value="#{pro.precio}" >
+                            <f:convertNumber pattern="$#0.00" />
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="Precio Total">
+                        <h:outputText value="#{total = pro.precio * pro.cantidadSoli}" >
+                            <f:convertNumber pattern="$#0.00" />
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+                <p:panelGrid columns="2" >
+                    <h:outputText value="Total " />
+                    <h:outputText value="#{caja.total}" >
+                        <f:convertNumber pattern="$#0.00" />
+                    </h:outputText>
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>
+

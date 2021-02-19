@@ -1,0 +1,98 @@
+input, textArea{
+    width: 90%;
+}
+
+input[type=text],[type=number],[type=email],[type=password],[type=tel],[type=url] {
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 3px;
+    border-radius:2px;
+    border: 2px solid #555;
+}
+
+input[type=text]:focus {
+    border: 2px solid steelblue;
+}
+
+
+input[type=number]:focus {
+    border: 2px solid steelblue;
+}
+
+input[type=email]:focus {
+    border: 2px solid steelblue;
+}
+
+input[type=password]:focus {
+    border: 2px solid steelblue;
+}
+
+input[type=tel]:focus {
+    border: 2px solid steelblue;
+}
+
+input[type=url]:focus {
+    border: 2px solid steelblue;
+}
+
+textarea {
+    font-size: 1rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 3px;
+    border-radius: 5px;
+    border: 2px solid #555;
+    resize: none;
+    min-height: fit-content;
+}
+
+textarea:focus {
+    border: 2px solid steelblue;
+}
+
+input:invalid:after {
+    border-color: lightcoral;
+}
+
+input:valid:after {
+    border-color: lightgreen;
+}
+
+input[type=button],[type=submit],[type=reset]{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    padding-left: 3px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type=button]:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+input[type=button]:active {
+    color: white;
+    background-color: steelblue;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type=submit]:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+input[type=submit]:active {
+    color: white;
+    background-color: steelblue;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+}
+
+input[type=reset]:hover {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+input[type=reset]:active {
+    color: white;
+    background-color: steelblue;
+    box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.2);
+}

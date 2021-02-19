@@ -1,0 +1,22 @@
+.float{
+    padding: 25px 8px 5px 8px;
+    background-color:#2E9AFE;
+    border-radius:50px;
+    text-align:center;
+    box-shadow: 2px 2px 3px #999;
+}
+
+.float img{
+    padding-bottom: 0px;
+    width:32px;
+    margin-top: 1px;
+    padding: 2px 1px;
+}
+
+.float:hover {
+    background-color: steelblue;
+}
+
+.float:active {
+    box-shadow: 2px 2px 3px #666;
+}

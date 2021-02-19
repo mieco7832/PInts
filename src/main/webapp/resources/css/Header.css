@@ -1,0 +1,64 @@
+
+body {
+    margin: 0px;
+}
+header {
+    z-index: 100;
+    position: fixed;
+    overflow: hidden;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    display: inline-table;
+    background-color: #2E9AFE;
+    box-shadow: 1px 1px 5px 0.1px black;
+}
+
+header div.btn{
+    text-align: center;
+    padding: 8px;
+    float: left;
+    width: 175px;
+    margin: 5px;
+}
+
+header div.title{
+    display: inline-table;
+    float: left;
+    width: 200px;
+}
+
+header div.navbar {
+    width: 65%;
+    float: left;
+    display: inline-table;
+    text-align:center;
+    border: solid 1px transparent;
+}
+
+div.navbar a {
+    float: left;
+    margin-left: 5px;
+    padding: 20px 14px;
+    font-size: 17px;
+    text-decoration: none;
+    color:black;
+}
+
+div.navbar a:hover {
+    background: black;
+    color: #2E9AFE;
+    box-shadow: 1px 1px 5px 0.1px black;
+}
+
+div.title p{
+    margin: 5px;
+    padding: 15px;
+    text-align: center;
+    font-size: 160%;
+    color: white;
+}
+
+div.btn img{
+    cursor: pointer;
+}

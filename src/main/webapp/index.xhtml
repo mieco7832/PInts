@@ -1,0 +1,77 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pints</title>
+    </h:head>
+    <h:body>
+        <!-- Header -->
+        <header>
+            <div class="title">
+                <p>Pints</p>
+            </div>
+        </header>
+        <!-- Page content -->
+        <div class="container" style="padding-bottom: 0px;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card inicio" 
+                         style="background: url(resources/img/bg-Pints.jpg) no-repeat;
+                         height: 630px;
+                         background-position: center;
+                         background-size: cover;">
+                        <!-- Row Start -->
+                        <div class="row" style="padding-top: 12rem;">
+                            <div class="col-12" >
+                                <h:form id="validUser">
+                                    <div class="row">
+                                        <div class="col-4"></div>
+                                        <div class="col-4">
+                                            <p:outputLabel for="usuario" value="Usuario" style="color: whitesmoke;"/> <br />
+                                            <p:inputText id="usuario" value="#{sesion.usuario}" placeholder="Nombre de Usuario" required="true" requiredMessage="¡Campo Vacío!" style="background-color: whitesmoke;"/>
+                                        </div>
+                                        <div class="col-2">
+                                            <p:messages showDetail="false" for="usuario" autoUpdate="true"/>
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"></div>
+                                        <div class="col-4">
+                                            <p:outputLabel for="clave" value="Contraseña" style="color: whitesmoke;"/> <br />
+                                            <p:password id="clave" value="#{sesion.clave}" placeholder="Contraseña" required="true" requiredMessage="¡Campo Vacío!" style="background-color: whitesmoke;"/>
+                                        </div>
+                                        <div class="col-2">
+                                            <p:messages showDetail="false" for="clave" autoUpdate="true" />
+                                        </div>
+                                        <div class="col-2"></div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-4"></div>
+                                        <div class="col-4">
+                                            <p:commandButton value="Ingresar" actionListener="#{sesion.login()}" style="background-color: whitesmoke;" /><br />
+                                            <p:messages showDetail="false" id="usuarioNull" closable="true" autoUpdate="#{sesion.inicio == 'error'}"/>
+                                        </div>
+                                        <div class="col-4"></div>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                        <!-- Row End -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h:outputStylesheet library="css" name="sidebar.css" />
+        <h:outputStylesheet library="css" name="Container.css" />
+        <h:outputStylesheet library="css" name="header.css" />
+        <h:outputStylesheet library="css" name="Card.css" />
+        <h:outputStylesheet library="css" name="Boton-Flat.css" />
+        <h:outputStylesheet library="css" name="input.css" />
+        <h:outputStylesheet library="css" name="Table.css" />
+    </h:body>
+</html>
+

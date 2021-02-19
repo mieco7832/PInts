@@ -1,0 +1,69 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Facelet Title</title>
+    </h:head>
+    <h:body>
+        <ui:component>
+            <!-- Header -->
+            <header>
+                <div class="btn">
+                    <img src="../resources/img/menu.svg" width="32px;" alt="menu" onclick="toggleMenu()"/>
+                </div>
+                <div class="title">
+                    <p>Pints</p>
+                </div>
+            </header>
+            <!-- Sidebar -->
+            <div class="sidebar" id="sidebar">
+                <div class="company">
+                    <p:graphicImage name="img/bodega.png" rendered="#{cargo == 'Bodeguero'}"/>
+                    <p:graphicImage name="img/catalog.png" rendered="#{cargo == 'Operario Venta'}"/>
+                    <p:graphicImage name="img/buy.png" rendered="#{cargo == 'Operario Caja'}"/>
+                </div>
+                <div class="profile">
+                    <p>#{usval}</p>
+                </div>
+                <p:link outcome="inicio" styleClass="active" value="Inicio" rendered="#{param.inicio != 0 and usval != null}" />
+                <p:link outcome="inicio" value="Inicio" rendered="#{param.inicio == 0 and usval != null}">
+                    <f:param name="inicio" value="1" />
+                </p:link>
+                <p:link outcome="ventas" styleClass="#{param.ventas}" value="Sala de Venta" rendered="#{cargo == 'Operario Venta'}">
+                    <f:param name="ventas" value="active" />
+                    <f:param name="inicio" value="0" />
+                    <f:param name="control" value="active" />
+                </p:link>
+                <p:link outcome="bodega" styleClass="#{param.bodega}" value="Bodega" rendered="#{cargo == 'Bodeguero'}">
+                    <f:param name="bodega" value="active" />
+                    <f:param name="inicio" value="0" />
+                </p:link>
+                <p:link outcome="caja" styleClass="#{param.caja}" value="Caja" rendered="#{cargo == 'Operario Caja'}">
+                    <f:param name="caja" value="active" />
+                    <f:param name="inicio" value="0" />
+                </p:link>
+                <div class="sesion">
+                    <h:form rendered="#{usval != null}">
+                        <p:commandLink actionListener="#{sesion.logout()}" value="Cerrar Sesión" />
+                    </h:form>
+                </div>
+                <h:form>
+                    <p:remoteCommand autoRun="#{usval == null}" actionListener="#{sesion.logout()}" />
+                </h:form>
+            </div>
+            <h:outputScript library="js" name="toggleMenu.js" />
+            <h:outputStylesheet library="css" name="sidebar.css" />
+            <h:outputStylesheet library="css" name="Container.css" />
+            <h:outputStylesheet library="css" name="header.css" />
+            <h:outputStylesheet library="css" name="Card.css" />
+            <h:outputStylesheet library="css" name="Boton-Flat.css" />
+            <h:outputStylesheet library="css" name="input.css" />
+            <h:outputStylesheet library="css" name="Table.css" />
+        </ui:component>
+    </h:body>
+</html>
+

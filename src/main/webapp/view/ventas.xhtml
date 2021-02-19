@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Pints</title>
+    </h:head>
+    <h:body>
+        <ui:include src="componentes/header.xhtml" />
+        <!-- Page content -->
+        <div class="content" id="content">
+            <div class="container">
+                <!-- Nombre de la Instancia -->
+                <div class="subtitle">
+                    <h2>Ventas</h2>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Card Start -->
+                        <div class="card">
+                            <!-- Row Start -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="subFilter">
+                                        <h2>Productos</h2>
+                                    </div>
+                                    <p:dataTable id="tablaCatalogo" styleClass="tabla" value="#{ventas.catalogolista}" var="cat" 
+                                                 scrollable="true" scrollHeight="600" emptyMessage="¡No se encontro registro!" >
+                                        <p:column headerText="Nombre del Color">
+                                            <h:outputText value="#{cat.color} #{cat.id}" />
+                                        </p:column>
+                                        <p:column headerText="Vista Previa" style="background-color: ##{cat.codigo}">
+                                        </p:column>
+                                        <p:column headerText="Base">
+                                            <h:outputText value="#{cat.base}" />
+                                        </p:column>
+                                        <p:column headerText="Presentación">
+                                            <h:outputText value="#{cat.presentacion}"/>
+                                        </p:column>
+                                        <p:column headerText="Marca">
+                                            <h:outputText value="#{cat.marca}" />
+                                        </p:column>
+                                        <p:column headerText="Precio">
+                                            <h:outputText value="#{cat.precio}" />
+                                        </p:column>
+                                        <p:column headerText="Agregar">
+                                            <h:form>
+                                                <!-- Error de Index -->
+                                                <p:commandLink styleClass="float" actionListener="#{ventas.selecionarProducto(cat.id)}" 
+                                                               update="tablaSolicitudes dgAgrePro" onclick="PF('dgAgregarProducto').show();" disabled="#{param.control != 'nuevo'}" >
+                                                    <f:param name="control" value="nuevo" />
+                                                    <img src="https://image.flaticon.com/icons/svg/1237/1237946.svg" alt="Agregar" />
+                                                </p:commandLink>
+                                            </h:form>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                            <!-- Row End -->        
+                            <!-- Row Start -->
+                            <h:form id="formNuevaSolicitud" >
+                                <div class="row">
+                                    <div class="col-10"></div>
+                                    <div class="col-2">
+                                        <p:commandButton value="Nuava Solicitud" actionListener="#{ventas.crearSolicitud(doc)}"
+                                                         update="@form tablaCatalogo registroSolicitud tablaSolicitudes" disabled="#{ventas.correlativo != ''}" >
+                                            <f:param name="control" value="nuevo" />
+                                        </p:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                            <h:form id="tablaSolicitudes" >
+                                <p:dataTable rendered="#{ventas.correlativo != ''}" value="#{ventas.listaSolicitudes}" var="pd" 
+                                             scrollable="true" scrollHeight="250" emptyMessage="¡Carrito de Comrpas!" >
+                                    <f:facet name="header">
+                                        <h:outputText value="Solicitud: ##{ventas.solicitudModelo.correlativo}" />
+                                    </f:facet>
+                                    <p:column headerText="Producto" >
+                                        <h:outputText value="#{pd.codigo} #{pd.base} #{pd.presentacion} #{pd.marca}" />
+                                    </p:column>
+                                    <p:column headerText="Quitar" >
+                                        <p:commandLink styleClass="float" disabled="#{param.control != 'nuevo'}" actionListener="#{ventas.quitarDetalle(pd.id)}" update="tablaSolicitudes" >
+                                            <f:param name="control" value="nuevo" />
+                                            <img src="https://image.flaticon.com/icons/svg/1828/1828901.svg" alt="Quitar" />
+                                        </p:commandLink>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                            <h:form id="registroSolicitud">
+                                <div class="row">
+                                    <div class="col-3"></div>
+                                    <div class="col-3"></div>
+                                    <div class="col-3">
+                                        <p:commandButton  rendered="#{ventas.correlativo != ''}" value="Cancelar" actionListener="#{ventas.cancelarSolicitud()}" update="@form tablaCatalogo tablaSolicitudes formNuevaSolicitud" />
+                                    </div>
+                                    <div class="col-3">
+                                        <p:commandButton rendered="#{ventas.correlativo != ''}" value="Agregar" actionListener="#{ventas.guardarSolicitud()}" update="@form tablaCatalogo tablaSolicitudes formNuevaSolicitud">
+                                            <p:confirm header="Enviar" message="¿Estás Seguro de Enviar esta Solicitud?"/>
+                                        </p:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Solicitudes</h2>
+                                    <h:form id="tablaSolicitud">
+                                        <p:dataTable value="#{ventas.listaEspera}" var="sol" scrollable="true" scrollHeight="200" emptyMessage="¡No se encontro registro!" >
+                                            <p:column headerText="Correlativo">
+                                                <h:outputText value="#{sol.correlativo}" />
+                                            </p:column>
+                                            <p:column headerText="Fecha">
+                                                <h:outputText value="#{sol.fechaSoli}" >
+                                                    <f:convertDateTime pattern="yyyy MMMM dd hh:mm:ss aaa" timeZone="GMT-6" locale="es" />
+                                                </h:outputText>
+                                            </p:column>
+                                            <p:column headerText="Estado" >
+                                                <h:outputText value="#{sol.estadoSoli}" />
+                                            </p:column>
+                                            <p:column headerText="Detalles">
+                                                <p:commandLink styleClass="float" update=":dgDetRes" actionListener="#{ventas.detallesRespuesta(sol)}" onclick="PF('dgDetalleRespuesta').show();">
+                                                    <img src="https://image.flaticon.com/icons/svg/3077/3077242.svg" alt="Ver" />
+                                                </p:commandLink>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </h:form>
+                                </div>
+                            </div>
+                            <!-- Row End -->        
+                        </div>
+                        <!-- Card End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Dialogo de Agregar Aproducto -->
+        <p:dialog id="dgAP" widgetVar="dgAgregarProducto" modal="true" responsive="true" width="400" resizable="false" showEffect="fade" hideEffect="fade" draggable="false">
+            <p:ajax event="close" update="dgAP" listener="#{ventas.limpiar()}" />
+            <h:form id="dgAgrePro">
+                <p:panel>
+                    <p:panelGrid columns="2" >
+                        <h:outputText value="Producto" />
+                        <h:outputText value="Cantidad" />
+
+                        <h:outputText value="#{ventas.productoModelo.color} #{ventas.productoModelo.base} #{ventas.productoModelo.presentacion} #{ventas.productoModelo.marca}" />
+                        <p:inputNumber decimalPlaces="0" decimalSeparator="" required="true" value="#{ventas.cantidad}" />
+
+                        <p:commandButton actionListener="#{ventas.agregarProducto()}" value="Agregar" onclick="PF('dgAgregarProducto').hide();" update=":tablaSolicitudes :tablaSolicitud" disabled="#{param.control != 'nuevo'}" >
+                            <f:param name="control" value="nuevo" />
+                        </p:commandButton>
+                    </p:panelGrid>
+                </p:panel>
+            </h:form>
+        </p:dialog>
+        <!-- Dialogo de Confiramcion-->
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+            <p:commandButton value="Enviar" type="button" styleClass="ui-confirmdialog-yes" />
+            <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" />
+        </p:confirmDialog>   
+        <!-- Dialogo de Detalle Respuesta -->
+        <p:dialog id="dgDR" widgetVar="dgDetalleRespuesta" modal="true" responsive="true" width="600" resizable="false" showEffect="fade" hideEffect="fade" draggable="false">
+            <p:ajax event="close" update="dgDR" listener="#{ventas.limpiarRespuestas()}" />
+            <h:form id="dgDetRes">
+                <div class="subtitle">
+                    <h2>Detalles de la Respuesta: #{ventas.respuestaModelo.solicitud}</h2>
+                </div>
+                <p:panelGrid columns="2" >
+                    <h:outputText value="Comentario" style="font-weight: bold;" />
+                    <h:outputText value="Fecha" style="font-weight: bold;"/>
+
+                    <h:outputText value="#{ventas.respuestaModelo.comentario}" />
+                    <h:outputText value="#{ventas.respuestaModelo.fechaRespuesta}" >
+                        <f:convertDateTime pattern="yyyy MMMM dd hh:mm:ss aaa" timeZone="GMT-6" locale="es" />
+                    </h:outputText>
+
+                    <h:outputText value="Bodeguero" style="font-weight: bold;"/>
+                    <h:outputText value="Correlativo" style="font-weight: bold;"/>
+
+                    <h:outputText value="#{ventas.respuestaModelo.bodeguero}" />
+                    <h:outputText value="#{ventas.respuestaModelo.solicitud}" />
+                </p:panelGrid>
+            </h:form>
+        </p:dialog>
+    </h:body>
+</html>

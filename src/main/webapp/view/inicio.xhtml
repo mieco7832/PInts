@@ -1,0 +1,36 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Pints</title>
+    </h:head>
+    <h:body>
+        <ui:include src="componentes/header.xhtml" rendered="#{usval != null}" />
+        <!-- Page content -->
+        <h:form rendered="#{usval != null}">
+            <div class="content" id="content">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="card" style="height: -webkit-fill-available">
+                                <img src="../resources/img/nueva presentacion.jpg" width="100%" alt=""/>
+                                <p>Nueva Presentación de Pintura: Galon, Material metalico, Sin manija.</p>
+                                <p>¡Importante! Solo para bases mate</p>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="card" style="height: -webkit-fill-available">
+                                <img src="../resources/img/pallet.jpg" width="100%" alt=""/>
+                                <p>Nuevo Color de Pintura: Contraste Gris.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </h:form>
+    </h:body>
+</html>
+

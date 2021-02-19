@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="sourcePints" transaction-type="JTA">
+    <jta-data-source>jdbc/pints</jta-data-source>
+    <class>com.pints.entity.Base</class>
+    <class>com.pints.entity.Color</class>
+    <class>com.pints.entity.DetalleFactura</class>
+    <class>com.pints.entity.DetalleSolicitud</class>
+    <class>com.pints.entity.Factura</class>
+    <class>com.pints.entity.Marca</class>
+    <class>com.pints.entity.Pintura</class>
+    <class>com.pints.entity.Presentacion</class>
+    <class>com.pints.entity.ReporteGerente</class>
+    <class>com.pints.entity.ReporteJefe</class>
+    <class>com.pints.entity.ReporteOperario</class>
+    <class>com.pints.entity.ReporteSupervisor</class>
+    <class>com.pints.entity.RespuestaSolicitud</class>
+    <class>com.pints.entity.SolicitudProducto</class>
+    <class>com.pints.entity.Sucursal</class>
+    <class>com.pints.entity.Usuario</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+    </properties>
+  </persistence-unit>
+</persistence>

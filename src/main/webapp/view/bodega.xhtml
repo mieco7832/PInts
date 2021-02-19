@@ -1,0 +1,112 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Pints</title>
+    </h:head>
+    <h:body>
+        <ui:include src="componentes/header.xhtml" />
+        <!-- Page content -->
+        <div class="content" id="content">
+            <div class="container">
+                <!-- Nombre de la Instancia -->
+                <div class="subtitle">
+                    <h2>Bodega</h2>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Card Start -->
+                        <div class="card">
+                            <!-- Row Start -->
+                            <div class="row">
+                                <div class="col-12">
+                                    <h2>Solicitudes</h2>
+                                    <p:dataTable id="tablaSolicitud" value="#{bodega.listaSolictudes}" var="bod" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="250" emptyMessage="¡No hay solicitudes pendientes!" >
+                                        <p:column headerText="Código" >
+                                            <h:outputText value="#{bod.correlativo}" />
+                                        </p:column>
+                                        <p:column headerText="Fecha Entrante" >
+                                            <h:outputText value="#{bod.fechaSoli}">
+                                                <f:convertDateTime pattern="yyyy MMMM dd hh:mm:ss aaa" timeZone="GMT-6" locale="es" />
+                                            </h:outputText>
+                                        </p:column>
+                                        <p:column headerText="Detalle" >
+                                            <p:commandLink onclick="PF('dgDetalleProducto').show();" update="detalleProducto" 
+                                                           actionListener="#{bodega.solicitudById(bod)}" styleClass="float" >
+                                                <img src="https://image.flaticon.com/icons/svg/3077/3077242.svg" alt="Mostrar Detalles" />
+                                            </p:commandLink>
+                                        </p:column>
+                                        <p:column headerText="Vendedor" >
+                                            <h:outputText value="#{bod.empleado}"/>
+                                        </p:column>
+                                        <p:column headerText="Acciones">
+                                            <h:form id="formDataPintura">
+                                                <p:commandLink onclick="PF('dgRespuestaSolicitud').show();" update="respuestaProducto" 
+                                                               actionListener="#{bodega.solicitudById(bod)}" styleClass="float" >
+                                                    <img src="https://image.flaticon.com/icons/svg/1933/1933005.svg" alt="Agregar Una Respuesta" />
+                                                </p:commandLink>
+                                            </h:form>
+                                        </p:column>
+                                    </p:dataTable>
+                                </div>
+                            </div>
+                            <!-- Row End -->        
+                        </div>
+                        <!-- Card End-->
+                    </div>
+                </div>
+                <!-- Dialog Detalle -->
+                <p:dialog id="dgDetPro" header="Detalles del Producto" widgetVar="dgDetalleProducto" modal="true" responsive="true" width="512" resizable="false" showEffect="fade" hideEffect="fade" draggable="false">
+                    <p:ajax event="close" update=":tablaSolicitud detalleProducto" listener="#{bodega.init()}" />
+                    <h:form id="detalleProducto">
+                        <p:dataTable id="tablaPintura" value="#{bodega.listaDetalles}" var="det" scrollRows="20" scrollable="true" liveScroll="true" scrollHeight="250">
+                            <p:column headerText="Producto">
+                                <p:outputLabel value="#{det.codigo} #{det.base} #{det.marca} #{det.presentacion}"/>
+                            </p:column>
+                            <p:column headerText="Cantidad Solicitada">
+                                <p:outputLabel value="#{det.cantidadSoli}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </h:form>
+                </p:dialog>
+                <!-- Dialog Respuesta -->
+                <p:dialog id="dgResPro" header="Responder Solicitud" widgetVar="dgRespuestaSolicitud" modal="true" responsive="true" width="800" resizable="false" showEffect="fade" hideEffect="fade" draggable="false">
+                    <p:ajax event="close" update=":tablaSolicitud respuestaProducto" listener="#{bodega.init()}" />
+                    <h:form id="respuestaProducto">
+                        <div class="row">
+                            <div class="col-5">
+                                <h:outputText value="Detalle de la Respuesta" />
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-5">
+                                <h:outputText value="Estado" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                                <p:inputTextarea rows="5" autoResize="true" value="#{bodega.comentario}" required="true"/>
+                            </div>
+                            <div class="col-1"></div>
+                            <div class="col-4">
+                                <p:selectOneMenu autoWidth="true" value="#{bodega.estado}" required="true">
+                                    <f:selectItem itemLabel="Disponible" itemValue="Disponible" />
+                                    <f:selectItem itemLabel="No Disponible" itemValue="Rechazada" />
+                                </p:selectOneMenu>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <p:commandButton actionListener="#{bodega.responder(doc)}" value="Enviar" update="respuestaProducto :tablaSolicitud" onclick="PF('dgRespuestaSolicitud').hidden();" />
+                            </div>
+                        </div>
+                    </h:form>
+                </p:dialog>
+            </div>
+        </div>
+    </h:body>
+</html>
+
